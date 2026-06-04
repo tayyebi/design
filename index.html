@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کیت برند — سامانه طراحی</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+  accent-color: var(--palette-ember);
+}
+:root:has(#theme-toggle:not(:checked)) {
+  color-scheme: light;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+/* ── Slide deck ── */
+[role="region"] {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 8px 20px;
+  z-index: 100;
+  font-size: 13px;
+}
+[role="region"] button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--color-text-muted);
+  transition: background .2s, color .2s;
+}
+[role="region"] button:hover {
+  background: color-mix(in srgb, var(--color-primary), transparent 80%);
+  color: var(--color-primary);
+}
+[role="region"] button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+[role="tablist"] {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+}
+[role="tablist"] li {
+  list-style: none;
+}
+[role="tab"] {
+  all: unset;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  cursor: pointer;
+  transition: background .3s, transform .2s;
+}
+[role="tab"][aria-selected="true"] {
+  background: var(--color-primary);
+  transform: scale(1.3);
+}
+[role="tab"]:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Slide container ── */
+#deck {
+  display: flex;
+  height: 100vh;
+  transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+  will-change: transform;
+}
+
+/* ── Each slide ── */
+#deck > section {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 48px;
+  overflow-y: auto;
+  direction: rtl;
+}
+#deck > section:first-child {
+  align-items: center;
+  text-align: center;
+}
+
+/* ── Slide content ── */
+#deck > section h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 24px;
+  color: var(--color-text);
+}
+#deck > section:first-child h2 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+#deck > section:first-child p {
+  font-size: 20px;
+  color: var(--color-text-muted);
+  max-width: 500px;
+}
+#deck > section h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+/* ── Theme toggle on first slide ── */
+#deck > section:first-child header {
+  margin-top: 28px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+#deck > section:first-child header label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+#deck > section:first-child header input[role="switch"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 24px;
+  border: none;
+  background: var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+#deck > section:first-child header input[role="switch"]::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: var(--palette-cream);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: auto;
+  right: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  transition: left .2s, right .2s;
+}
+#deck > section:first-child header input[role="switch"]:checked {
+  background: var(--color-primary);
+}
+#deck > section:first-child header input[role="switch"]:checked::before {
+  right: auto;
+  left: 2px;
+}
+#deck > section:first-child header input[role="switch"]:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Images ── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Links ── */
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+a:hover {
+  color: color-mix(in srgb, var(--color-link), var(--color-burned-brown) 20%);
+}
+
+/* ── Logo grid ── */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  list-style: none;
+  width: 100%;
+}
+.logo-grid li {
+  list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.logo-grid figure {
+  margin: 0;
+}
+.logo-grid figure > a {
+  display: block;
+  padding: 24px;
+  background: #fefdfc;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+}
+.logo-grid figure a img {
+  max-height: 100px;
+  object-fit: contain;
+}
+.logo-grid figcaption {
+  padding: 12px 16px;
+}
+.logo-grid figcaption strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.logo-grid figcaption p {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.logo-grid figcaption code {
+  display: block;
+  font-size: 11px;
+  word-break: break-all;
+  background: color-mix(in srgb, var(--color-primary), transparent 90%);
+  padding: 6px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+}
+
+/* ── Color swatches ── */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  list-style: none;
+  width: 100%;
+}
+.color-grid li {
+  list-style: none;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+.color-grid figure {
+  margin: 0;
+}
+.color-grid figure > div {
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+}
+.color-grid figure div strong {
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.color-grid figcaption {
+  padding: 12px 16px;
+}
+.color-grid figcaption strong {
+  display: block;
+  font-size: 15px;
+}
+.color-grid figcaption p {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.color-grid figcaption dl {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--color-text-faint);
+}
+.color-grid figcaption dt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ── Swatch backgrounds ── */
+.swatch-forest { background: var(--palette-forest); }
+.swatch-ember { background: var(--palette-ember); }
+.swatch-amber { background: var(--palette-amber); }
+.swatch-mint { background: var(--palette-mint); }
+.swatch-blush { background: var(--palette-blush); }
+.swatch-navy { background: var(--palette-navy); }
+.swatch-cream { background: var(--palette-cream); }
+.swatch-cream strong { color: var(--color-burned-brown); background: rgba(0,0,0,.08); }
+.swatch-amber strong { color: var(--color-burned-brown); background: transparent; }
+
+/* ── Typography cards ── */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+.type-grid article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.type-grid article header {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-faint);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.type-grid article h3 {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+.type-grid article p {
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+.type-grid article code {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-faint);
+  direction: ltr;
+  text-align: left;
+}
+.type-grid article:first-child h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* ── Buttons ── */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+.btn-group button,
+a[role="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s, transform .1s;
+  line-height: 1;
+  text-decoration: none;
+  background: transparent;
+  color: var(--color-text);
+}
+.btn-group button:active,
+a[role="button"]:active {
+  transform: scale(.97);
+}
+.btn-pri {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+}
+.btn-pri:hover {
+  background: color-mix(in srgb, var(--color-primary), var(--color-burned-brown) 12%);
+}
+.btn-sec {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn-sec:hover {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+}
+.btn-out {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn-out:hover {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-primary);
+}
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--color-primary), transparent 88%);
+}
+.btn-dis {
+  background: color-mix(in srgb, var(--color-primary), transparent 60%);
+  color: color-mix(in srgb, var(--palette-cream), transparent 40%);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Form ── */
+form {
+  max-width: 500px;
+  width: 100%;
+}
+form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+form legend {
+  font-family: var(--font-display);
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+form p {
+  margin-bottom: 14px;
+}
+form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+form input[type="text"],
+form input[type="email"],
+form select,
+form textarea {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  margin-top: 6px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: #222;
+  color: var(--color-text);
+  transition: border-color .2s;
+}
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary), transparent 80%);
+}
+form select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 14px center;
+  padding-left: 36px;
+}
+form input[type="checkbox"],
+form input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border);
+  background: #222;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 8px;
+  transition: border-color .2s, background .2s;
+}
+form input[type="checkbox"] { border-radius: 4px; }
+form input[type="radio"] { border-radius: 50%; }
+form input[type="checkbox"]:checked,
+form input[type="radio"]:checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+}
+form input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M20 6L9 17l-5-5' stroke='%23fefdfc' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+form input[type="radio"]:checked {
+  box-shadow: inset 0 0 0 4px #222;
+}
+form label:has(input[type="checkbox"]),
+form label:has(input[type="radio"]) {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+}
+
+/* ── RTL overrides for components ── */
+#deck > section select {
+  background-position: right 14px center;
+  padding-left: 14px;
+  padding-right: 36px;
+}
+
+/* ── Badges ── */
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+.badge-group mark {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--color-text);
+}
+.badge-forest { background: var(--palette-forest); color: var(--palette-cream); }
+.badge-mint { background: var(--palette-mint); color: var(--palette-cream); }
+.badge-amber { background: var(--palette-amber); color: var(--color-burned-brown); }
+.badge-navy { background: var(--color-navy); color: var(--palette-cream); }
+
+/* ── Alert ── */
+.alert-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+}
+.alert-group aside {
+  padding: 14px 18px;
+  border-radius: 10px;
+  border-right: 5px solid transparent;
+  font-size: 13px;
+}
+.alert-group aside h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.alert-group aside p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+.alert-succ {
+  background: color-mix(in srgb, var(--color-primary), transparent 85%);
+  border-right-color: var(--color-primary);
+}
+.alert-succ h4 { color: var(--color-primary); }
+.alert-err {
+  background: color-mix(in srgb, var(--color-secondary), transparent 85%);
+  border-right-color: var(--color-secondary);
+}
+.alert-err h4 { color: var(--color-secondary); }
+.alert-warn {
+  background: color-mix(in srgb, var(--color-accent), transparent 80%);
+  border-right-color: var(--color-accent);
+}
+.alert-warn h4 { color: #b38600; }
+.alert-info {
+  background: color-mix(in srgb, var(--color-navy), transparent 85%);
+  border-right-color: var(--color-navy);
+}
+.alert-info h4 { color: var(--color-navy); }
+
+/* ── Card ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+.card-grid article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.card-grid article h4 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.card-grid article p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* ── Nav ── */
+.demo-nav {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+.demo-nav ul {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+.demo-nav li {
+  list-style: none;
+}
+.demo-nav a {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-link);
+  transition: background .2s;
+}
+.demo-nav a:hover {
+  background: color-mix(in srgb, var(--color-primary), transparent 92%);
+}
+.demo-nav a[aria-current="page"] {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+}
+
+/* ── Tabs ── */
+.tab-group {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  border-bottom: 2px solid var(--color-border);
+  width: 100%;
+  max-width: 500px;
+}
+.tab-group li {
+  list-style: none;
+}
+.tab-group button {
+  all: unset;
+  display: block;
+  padding: 10px 18px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .2s, border-color .2s;
+}
+.tab-group button:hover {
+  color: var(--color-text);
+}
+.tab-group button[aria-current="page"] {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+.pill-group {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 4px;
+  width: fit-content;
+}
+.pill-group li {
+  list-style: none;
+}
+.pill-group button {
+  all: unset;
+  display: block;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: background .2s, color .2s;
+  white-space: nowrap;
+}
+.pill-group button:hover {
+  color: var(--color-text);
+}
+.pill-group button[aria-current="page"] {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+  font-weight: 600;
+}
+
+/* ── Table ── */
+.demo-table {
+  overflow-x: auto;
+  width: 100%;
+  max-width: 600px;
+}
+.demo-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.demo-table caption {
+  caption-side: top;
+  text-align: start;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 400;
+  padding-bottom: 10px;
+}
+.demo-table th {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+  font-weight: 700;
+  text-align: start;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+.demo-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+.demo-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.demo-table tbody tr:hover td {
+  background: color-mix(in srgb, var(--color-primary), transparent 92%);
+}
+
+/* ── Stats ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+}
+.stats-grid li {
+  list-style: none;
+  text-align: center;
+  padding: 20px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.stats-grid li strong {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+.stats-grid li {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* ── Details / Accordion ── */
+.demo-accordion {
+  width: 100%;
+  max-width: 500px;
+}
+.demo-accordion details {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.demo-accordion details:last-of-type {
+  margin-bottom: 0;
+}
+.demo-accordion summary {
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background .2s;
+}
+.demo-accordion summary::-webkit-details-marker {
+  display: none;
+}
+.demo-accordion summary::before {
+  content: '+';
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-primary);
+}
+.demo-accordion details[open] summary::before {
+  content: '−';
+}
+.demo-accordion summary:hover {
+  background: color-mix(in srgb, var(--color-primary), transparent 92%);
+}
+.demo-accordion details[open] summary {
+  border-bottom: 1px solid var(--color-border);
+}
+.demo-accordion details p {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* ── Progress ── */
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  max-width: 400px;
+  height: 8px;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+  background: var(--color-border);
+}
+progress::-webkit-progress-bar {
+  background: transparent;
+}
+progress::-webkit-progress-value {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+progress::-moz-progress-bar {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+/* ── Dialog ── */
+dialog {
+  position: static;
+  width: 100%;
+  max-width: 400px;
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+dialog p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* ── Spinner ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+output {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+/* ── Avatar ── */
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--palette-cream);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+}
+
+/* ── Tags / CLI ── */
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+.tag-group samp {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  background: #1a1a2e;
+  color: #a8e6cf;
+  font-family: var(--font-mono);
+}
+.tag-group s {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-decoration: none;
+  background: var(--palette-amber);
+  color: var(--color-burned-brown);
+  font-weight: 700;
+}
+
+/* ── Testimonial ── */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+.testimonial-grid li {
+  list-style: none;
+}
+.testimonial-grid article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.testimonial-grid article h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+}
+.testimonial-grid article > p {
+  margin: 0;
+}
+.testimonial-grid article > p:first-of-type {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  order: -1;
+}
+.testimonial-grid article blockquote {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Hero demo ── */
+.hero-demo {
+  width: 100%;
+  padding: 24px;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+.hero-demo h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.hero-demo > p {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  max-width: 450px;
+  margin-bottom: 20px;
+}
+.hero-demo menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.hero-demo menu li {
+  list-style: none;
+}
+
+/* ── Code / pre ── */
+pre {
+  direction: ltr;
+  text-align: left;
+  background: #1a1a2e;
+  color: #a8e6cf;
+  border-radius: 8px;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+pre code {
+  all: unset;
+  direction: ltr;
+  text-align: left;
+  display: block;
+}
+code {
+  direction: ltr;
+  text-align: left;
+  background: #1a1a2e;
+  color: #a8e6cf;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  #deck > section {
+    padding: 60px 24px;
+  }
+  #deck > section:first-child h2 {
+    font-size: 32px;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .color-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .logo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  [role="region"] {
+    bottom: 12px;
+    padding: 6px 14px;
+    gap: 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .color-grid {
+    grid-template-columns: 1fr;
+  }
+  .logo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div role="region" aria-label="Slide controls">
+  <button id="prev" aria-label="قبلی">›</button>
+  <span id="counter">1 / 14</span>
+  <ol role="tablist" id="dots" aria-label="Slide indicators"></ol>
+  <button id="next" aria-label="بعدی">‹</button>
+</div>
+
+<main id="deck" dir="rtl">
+
+<section>
+<h2>کیت برند</h2>
+<p>سامانه طراحی گردرگ — اجزای رابط کاربری با نشانه‌گذاری معنایی</p>
+<p style="margin-top:24px;font-size:14px;color:var(--color-text-faint)">از کلیدهای جهت‌نما برای حرکت بین اسلایدها استفاده کنید ←</p>
+<header>
+  <label>
+    <input type="checkbox" role="switch" id="theme-toggle" checked>
+    حالت تاریک
+  </label>
+</header>
+</section>
+
+<section>
+<h2>لوگو</h2>
+<ul class="logo-grid">
+<li>
+<figure>
+<a><img src="https://git.gordarg.com/gordarg/logo/raw/branch/main/Colorful.svg" alt="رنگی"></a>
+<figcaption><strong>رنگی</strong><p>لوگوی اصلی با رنگ‌های کامل برند</p></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<a><img src="https://git.gordarg.com/gordarg/logo/raw/branch/main/MonoChrome.svg" alt="تکرنگ"></a>
+<figcaption><strong>تکرنگ</strong><p>نسخه خاکستری برای چاپ تک‌رنگ</p></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<a><img src="https://git.gordarg.com/gordarg/logo/raw/branch/main/Outline.svg" alt="خطی"></a>
+<figcaption><strong>خطی</strong><p>برای حکاکی و برش لیزری</p></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<a><img src="https://git.gordarg.com/gordarg/logo/raw/branch/main/logo.svg" alt="کامل"></a>
+<figcaption><strong>کامل</strong><p>لوگو به همراه نوشتار برند</p></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<a><img src="https://git.gordarg.com/tayyebi/website/raw/branch/main/img/logo.svg" alt="طیبی"></a>
+<figcaption><strong>طیبی</strong><p>لوگوی شخصی محمد طیبی</p></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<a><img src="https://git.gordarg.com/tayyebi/website/raw/branch/main/img/seal.svg" alt="مُهر"></a>
+<figcaption><strong>مُهر</strong><p>مهر شخصی محمد طیبی</p></figcaption>
+</figure>
+</li>
+</ul>
+</section>
+
+<section>
+<h2>پالت رنگی</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">در حالت روشن، سبز طیف اصلی و قرمز ثانویه است. در حالت تاریک، قرمز طیف اصلی و سبز ثانویه می‌شود</p>
+<ul class="color-grid">
+<li>
+<figure>
+<div class="swatch-forest"><strong>اصلی</strong><strong>ثانویه</strong></div>
+<figcaption><strong>سبز جنگلی</strong><p>رنگ پایه برند</p><dl><dt>Hex</dt><dd>#174c38</dd></dl></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<div class="swatch-ember"><strong>ثانویه</strong><strong>اصلی</strong></div>
+<figcaption><strong>سرخ</strong><p>اکسنت پرانرژی</p><dl><dt>Hex</dt><dd>#af231c</dd></dl></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<div class="swatch-amber"><strong>اکسنت</strong></div>
+<figcaption><strong>طلایی</strong><p>هایلایت گرم</p><dl><dt>Hex</dt><dd>#f2b534</dd></dl></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<div class="swatch-mint"><strong>تینت</strong></div>
+<figcaption><strong>نعنایی</strong><p>پس‌زمینه ملایم</p><dl><dt>Hex</dt><dd>#afc2bb</dd></dl></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<div class="swatch-blush"><strong>تینت</strong></div>
+<figcaption><strong>رز</strong><p>تینت گرم</p><dl><dt>Hex</dt><dd>#dda19d</dd></dl></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<div class="swatch-navy"><strong>ثانویه</strong></div>
+<figcaption><strong>آبی ایرانی</strong><p>عناصر پشتیبان</p><dl><dt>Hex</dt><dd>#1c39bb</dd></dl></figcaption>
+</figure>
+</li>
+<li>
+<figure>
+<div class="swatch-cream"><strong>پس‌زمینه</strong></div>
+<figcaption><strong>کرم</strong><p>بافت گرم و ملایم</p><dl><dt>Hex</dt><dd>#fefdfc</dd></dl></figcaption>
+</figure>
+</li>
+</ul>
+</section>
+
+<section>
+<h2>تایپوگرافی</h2>
+<div class="type-grid">
+<article>
+<header>نمایش / هدینگ‌ها</header>
+<h3 style="font-family:var(--font-display);font-weight:400">لاله زار</h3>
+<p>فونت نمایشی پررنگ و مدرن برای هدینگ‌ها، عنوان‌های اصلی و بیانیه‌های برند.</p>
+<code>font-family: 'Lalezar', sans-serif;</code>
+</article>
+<article>
+<header>بدنه / رابط کاربری</header>
+<h3>ساحل</h3>
+<p>فونت sans-serif تمیز و خوش‌خوان برای بدنه متن، ناوبری و عناصر رابط کاربری.</p>
+<code>font-family: 'Sahel', sans-serif;</code>
+</article>
+</div>
+</section>
+
+<section>
+<h2>دکمه‌ها</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">انواع دکمه با استفاده از تگ <code>button</code> یا <code>a[role="button"]</code></p>
+<div class="btn-group">
+<button class="btn-pri">اولیه</button>
+<button class="btn-sec">ثانویه</button>
+<button class="btn-out">حاشیه‌ای</button>
+<button class="btn-ghost">شیشه‌ای</button>
+<button class="btn-dis" disabled>غیرفعال</button>
+</div>
+</section>
+
+<section>
+<h2>فرم‌ها</h2>
+<form>
+<fieldset>
+<legend>ورودی‌های فرم</legend>
+<p><label>متن <input type="text" placeholder="متن دلخواه"></label></p>
+<p><label>ایمیل <input type="email" placeholder="ایمیل"></label></p>
+<p><label>گزینه‌ها <select><option>گزینه اول</option><option>گزینه دوم</option></select></label></p>
+<p><label>توضیحات <textarea rows="2" placeholder="متن بلند"></textarea></label></p>
+<p><label><input type="checkbox"> گزینه چک‌باکس</label></p>
+<p><label><input type="radio" name="r"> گزینه اول</label>
+<label><input type="radio" name="r"> گزینه دوم</label></p>
+</fieldset>
+</form>
+</section>
+
+<section>
+<h2>کارت‌ها</h2>
+<div class="card-grid">
+<article><h4>کارت ساده</h4><p>این یک کارت نمونه با رنگ‌های برند است.</p></article>
+<article><h4>کارت با تصویر</h4><p>کارت حاوی توضیحات کوتاه و دکمه اقدام.</p></article>
+</div>
+<p style="margin-top:32px;margin-bottom:16px;font-size:14px;color:var(--color-text-muted)">نشان‌ها</p>
+<div class="badge-group">
+<mark class="badge-forest">سبز جنگلی</mark>
+<mark class="badge-mint">نعنایی</mark>
+<mark class="badge-amber">طلایی</mark>
+<mark class="badge-navy">آبی ایرانی</mark>
+</div>
+</section>
+
+<section>
+<h2>ناوبری</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">منوی ناوبری، خرده‌نوا و تب‌ها</p>
+<nav class="demo-nav" style="margin-bottom:24px">
+<ul>
+<li><a href="#">خانه</a></li>
+<li><a href="#">خدمات</a></li>
+<li><a href="#" aria-current="page">تماس</a></li>
+</ul>
+</nav>
+<ol class="tab-group" style="margin-bottom:24px">
+<li><button type="button" aria-current="page">طرح‌ها</button></li>
+<li><button type="button">کامپوننت‌ها</button></li>
+<li><button type="button">تنظیمات</button></li>
+</ol>
+<menu class="pill-group">
+<li><button type="button">وب</button></li>
+<li><button type="button" aria-current="page">موبایل</button></li>
+<li><button type="button">دسکتاپ</button></li>
+</menu>
+</section>
+
+<section>
+<h2>نمایش داده</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">جدول، آمار و نوار پیشرفت</p>
+<div class="demo-table" style="margin-bottom:32px">
+<table>
+<caption>لیست پروژه‌ها</caption>
+<thead><tr><th>ردیف</th><th>نام</th><th>وضعیت</th></tr></thead>
+<tbody>
+<tr><td>۱</td><td>طرح الف</td><td>تکمیل</td></tr>
+<tr><td>۲</td><td>طرح ب</td><td>در حال انجام</td></tr>
+<tr><td>۳</td><td>طرح ج</td><td>متوقف</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="stats-grid" style="margin-bottom:24px">
+<li><strong>۱۳۹۷</strong><br>شروع کار</li>
+<li><strong>۵</strong><br>اعضا</li>
+<li><strong>۹۹٪</strong><br>موفقیت</li>
+<li><strong>۹+</strong><br>مشتری</li>
+</ul>
+<p><label>پیشرفت: <progress value="65" max="100"></progress></label></p>
+</section>
+
+<section>
+<h2>بازخورد</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">هشدارها، اعلان‌ها و وضعیت</p>
+<div class="alert-group" style="margin-bottom:24px">
+<aside class="alert-succ"><h4>موفقیت</h4><p>عملیات با موفقیت انجام شد.</p></aside>
+<aside class="alert-err"><h4>خطا</h4><p>خطایی رخ داده است.</p></aside>
+<aside class="alert-warn"><h4>هشدار</h4><p>این عملیات غیرقابل بازگشت است.</p></aside>
+<aside class="alert-info"><h4>اطلاع‌رسانی</h4><p>به‌روزرسانی جدید در دسترس است.</p></aside>
+</div>
+<aside style="display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:10px;background:color-mix(in srgb,var(--color-primary),transparent 85%);border:1px solid var(--color-border);font-size:13px;max-width:400px">
+<p style="font-weight:700;color:var(--color-primary);display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--color-primary)"></span>همه سامانه‌ها عملیاتی</p>
+<p style="color:var(--color-text-muted);font-size:12px">۱۰۰٪ عملیاتی · ۳۰ روز گذشته</p>
+</aside>
+</section>
+
+<section>
+<h2>تعاملی</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">آکاردئون، دیالوگ، نشانه‌های بصری</p>
+<div class="demo-accordion" style="margin-bottom:32px">
+<details>
+<summary>عنوان بخش</summary>
+<p>محتوای بخش اول. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ.</p>
+</details>
+<details>
+<summary>عنوان دیگر</summary>
+<p>محتوای بخش دوم. لورم ایپسوم متن ساختگی.</p>
+</details>
+</div>
+<dialog open style="margin-bottom:24px">
+<p>این یک دیالوگ نمونه با رنگ‌های برند است.</p>
+</dialog>
+<div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+<output></output>
+<kbd>MT</kbd>
+</div>
+</section>
+
+<section>
+<h2>کد و برچسب</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">قطعه‌کد، ترمینال، برچسب‌های فنی</p>
+<pre style="margin-bottom:24px"><code>:root {
+  --color-primary: #174c38;
+  --color-surface: #fefdfc;
+}</code></pre>
+<div class="tag-group" style="margin-bottom:24px">
+<samp>main.less</samp>
+<samp>globals.css</samp>
+<mark class="badge-forest">نسخه ۳.۰</mark>
+<mark class="badge-amber">طراحی Responsive</mark>
+<s>۵۰٪ تخفیف</s>
+</div>
+<pre style="position:relative;padding-top:40px"><code style="all:unset;display:block;direction:ltr;text-align:left"><span style="color:#27c93f">✓</span> کامپایل assets انجام شد
+<span style="color:#27c93f">✓</span> خروجی در dist/build قرار گرفت
+→ npm run dev</code></pre>
+</section>
+
+<section>
+<h2>الگوهای صفحه</h2>
+<p style="margin-bottom:20px;color:var(--color-text-muted);font-size:14px">بیلبورد، توصیه مشتریان، مقاله</p>
+<div class="hero-demo" style="margin-bottom:24px">
+<h3>عنوان اصلی جذاب</h3>
+<p>توضیح کوتاه درباره ارزش پیشنهادی شما.</p>
+<menu>
+<li><a href="#" role="button" style="background:var(--color-primary);color:var(--palette-cream)">دکمه اصلی</a></li>
+<li><a href="#" role="button" style="background:transparent;color:var(--color-primary);border-color:var(--color-primary)">دکمه ثانویه</a></li>
+</menu>
+</div>
+<ul class="testimonial-grid">
+<li>
+<article>
+<h3>مدیر عامل</h3>
+<p>شرکت نمونه</p>
+<p>⭐⭐⭐⭐⭐</p>
+<blockquote>کیفیت کار و دقت در جزئیات فراتر از انتظار بود. همکاری مجدد را توصیه می‌کنم.</blockquote>
+</article>
+</li>
+</ul>
+</section>
+
+<section>
+<h2>راهنمای استفاده</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%;max-width:800px">
+<article style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:24px">
+<h3 style="font-family:var(--font-display);font-size:18px;font-weight:400">شروع سریع</h3>
+<p style="font-size:13px;color:var(--color-text-muted)">کافی است فایل CSS را مستقیماً از <code>design.tyyi.net</code> import کنید:</p>
+<pre style="margin-top:12px;font-size:11px"><code>&lt;link rel="stylesheet"
+  href="https://design.tyyi.net/style.css"&gt;</code></pre>
+</article>
+<article style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:24px">
+<h3 style="font-family:var(--font-display);font-size:18px;font-weight:400">حالت تاریک</h3>
+<p style="font-size:13px;color:var(--color-text-muted)">سوییچ به <code>&lt;header&gt;</code> اضافه کنید:</p>
+<pre style="margin-top:12px;font-size:11px"><code>&lt;label&gt;&lt;input type="checkbox"
+  role="switch"&gt; حالت تاریک&lt;/label&gt;</code></pre>
+</article>
+<article style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:24px">
+<h3 style="font-family:var(--font-display);font-size:18px;font-weight:400">ساختار HTML پایه</h3>
+<pre style="margin-top:12px;font-size:11px"><code>&lt;html lang="fa" dir="rtl"&gt;
+  &lt;head&gt;
+    &lt;link rel="stylesheet"
+      href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;header&gt;&lt;h1&gt;...&lt;/h1&gt;&lt;/header&gt;
+    &lt;main&gt;&lt;section&gt;...&lt;/section&gt;&lt;/main&gt;
+    &lt;footer&gt;...&lt;/footer&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</article>
+<article style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:24px">
+<h3 style="font-family:var(--font-display);font-size:18px;font-weight:400">شخصی‌سازی</h3>
+<p style="font-size:13px;color:var(--color-text-muted)">بازنویسی متغیرهای CSS در پروژه:</p>
+<pre style="margin-top:12px;font-size:11px"><code>:root {
+  --color-primary: #your-color;
+  --radius: 8px;
+}</code></pre>
+</article>
+</div>
+<p style="margin-top:24px;font-size:14px;color:var(--color-text-faint)">مخزن گیت‌هاب: <a href="https://github.com/tayyebi/design">github.com/tayyebi/design</a></p>
+</section>
+
+</main>
+
+<script>
+(function() {
+  var deck = document.getElementById('deck');
+  var slides = deck.querySelectorAll('section');
+  var total = slides.length;
+  var current = 0;
+
+  var counter = document.getElementById('counter');
+  var dots = document.getElementById('dots');
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+
+  function update() {
+    deck.style.transform = 'translateX(' + (current * 100) + '%)';
+    counter.textContent = (current + 1) + ' / ' + total;
+    var allDots = dots.querySelectorAll('[role="tab"]');
+    for (var i = 0; i < allDots.length; i++) {
+      allDots[i].setAttribute('aria-selected', i === current ? 'true' : 'false');
+    }
+  }
+
+  for (var i = 0; i < total; i++) {
+    var li = document.createElement('li');
+    var btn = document.createElement('button');
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    btn.setAttribute('aria-label', 'اسلاید ' + (i + 1));
+    btn.tabIndex = 0;
+    (function(idx) {
+      btn.addEventListener('click', function() { current = idx; update(); });
+    })(i);
+    li.appendChild(btn);
+    dots.appendChild(li);
+  }
+
+  prevBtn.addEventListener('click', function() {
+    if (current > 0) { current--; update(); }
+  });
+  nextBtn.addEventListener('click', function() {
+    if (current < total - 1) { current++; update(); }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (current < total - 1) { current++; update(); }
+    }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (current > 0) { current--; update(); }
+    }
+  });
+
+  var touchStartX = 0, touchEndX = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && current < total - 1) { current++; update(); }
+      if (diff < 0 && current > 0) { current--; update(); }
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>

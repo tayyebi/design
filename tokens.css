@@ -1,0 +1,78 @@
+/*
+ * design.tyyi.net — Design Token System
+ * Source: https://github.com/tayyebi/design
+ * Usage: @import url('https://design.tyyi.net/tokens.css');
+ *        (already included by style.css)
+ */
+
+:root {
+  /* ── Fixed palette (actual brand colors, never change) ── */
+  --palette-forest: #174c38;
+  --palette-ember: #af231c;
+  --palette-amber: #f2b534;
+  --palette-navy: #1c39bb;
+  --palette-mint: #afc2bb;
+  --palette-blush: #dda19d;
+  --palette-cream: #fefdfc;
+  --palette-white: #ffffff;
+
+  --palette-forest-rgb: 23, 76, 56;
+  --palette-ember-rgb: 175, 35, 28;
+  --palette-amber-rgb: 242, 181, 52;
+  --palette-navy-rgb: 28, 57, 187;
+  --palette-mint-rgb: 175, 194, 187;
+  --palette-blush-rgb: 221, 161, 157;
+
+  /* ── Non-pure replacements ── */
+  --color-burned-brown: #1a0c06;
+  --color-burned-brown-rgb: 26, 12, 6;
+}
+
+/* ── Light mode (default, no toggle) ── */
+:root,
+body:has(header input[role="switch"]:not(:checked)) {
+  --color-primary: var(--palette-forest);
+  --color-secondary: var(--palette-ember);
+  --color-accent: var(--palette-amber);
+  --color-navy: var(--palette-navy);
+  --color-mint: var(--palette-mint);
+  --color-blush: var(--palette-blush);
+  --color-white: var(--palette-cream);
+  --color-cream: var(--palette-cream);
+  --color-bg: var(--palette-cream);
+  --color-surface: var(--palette-cream);
+  --color-text: var(--color-burned-brown);
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-link: #1c39bb;
+}
+
+/* ── Dark mode (toggle checked) ── */
+body:has(header input[role="switch"]:checked) {
+  --color-primary: var(--palette-ember);
+  --color-secondary: var(--palette-forest);
+  --color-accent: var(--palette-amber);
+  --color-navy: var(--palette-navy);
+  --color-mint: #1a3a2e;
+  --color-blush: #3a1a18;
+  --color-white: #1e1e1e;
+  --color-cream: #1a1a1a;
+  --color-bg: #121212;
+  --color-surface: #1e1e1e;
+  --color-text: #e0e0e0;
+  --color-text-muted: #9a9a9a;
+  --color-text-faint: #6a6a6a;
+  --color-border: #333;
+  --color-link: #4a7dff;
+}
+
+/* ── Typography ── */
+:root {
+  --font-display: 'Lalezar', sans-serif;
+  --font-body: 'Sahel', sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Code', monospace;
+
+  --space-unit: 8px;
+  --radius: 12px;
+}
