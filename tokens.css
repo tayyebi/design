@@ -30,6 +30,7 @@
 
 /* ── Light mode (default, no toggle) ── */
 :root,
+:root:has(#theme-toggle:not(:checked)),
 body:has(header input[role="switch"]:not(:checked)) {
   --color-primary: var(--palette-forest);
   --color-secondary: var(--palette-ember);
@@ -49,7 +50,9 @@ body:has(header input[role="switch"]:not(:checked)) {
 }
 
 /* ── Dark mode (toggle checked) ── */
-body:has(header input[role="switch"]:checked) {
+:root:has(#theme-toggle:checked),
+body:has(header input[role="switch"]:checked),
+:root.dark-theme {
   --color-primary: var(--palette-ember);
   --color-secondary: var(--palette-forest);
   --color-accent: var(--palette-amber);
