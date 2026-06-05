@@ -10,14 +10,16 @@
         document.documentElement.className = e.data.theme ? 'dark-theme' : '';
       }
     });
-    var touchStartX = 0;
+    var touchStartX = 0, touchStartY = 0;
     document.addEventListener('touchstart', function(e) {
       touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
     document.addEventListener('touchend', function(e) {
-      var diff = touchStartX - e.changedTouches[0].screenX;
-      if (Math.abs(diff) > 50) {
-        parent.postMessage({ swipe: diff > 0 ? 'prev' : 'next' }, '*');
+      var dx = touchStartX - e.changedTouches[0].screenX;
+      var dy = touchStartY - e.changedTouches[0].screenY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        parent.postMessage({ swipe: dx > 0 ? 'prev' : 'next' }, '*');
       }
     }, { passive: true });
     return;
@@ -64,6 +66,7 @@
 
   function loadSlide(index) {
     current = index;
+    frame.classList.remove('ready');
     frame.src = slideFiles[index] + themeQuery();
     updateCounter();
     updateDots();
@@ -86,6 +89,11 @@
       if (e.data.swipe === 'prev' && current > 0) loadSlide(current - 1);
       if (e.data.swipe === 'next' && current < total - 1) loadSlide(current + 1);
     }
+  });
+
+  // Fade in iframe content on load
+  frame.addEventListener('load', function() {
+    frame.classList.add('ready');
   });
 
   // Create dots
