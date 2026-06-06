@@ -29,7 +29,24 @@
 }
 
 /* ── Light mode (default, no toggle) ── */
-:root,
+/* :root fallback needed for browsers without :has() support */
+:root {
+  --color-primary: var(--palette-forest);
+  --color-secondary: var(--palette-ember);
+  --color-accent: var(--palette-amber);
+  --color-navy: var(--palette-navy);
+  --color-mint: var(--palette-mint);
+  --color-blush: var(--palette-blush);
+  --color-white: var(--palette-cream);
+  --color-cream: var(--palette-cream);
+  --color-bg: var(--palette-cream);
+  --color-surface: var(--palette-cream);
+  --color-text: var(--color-burned-brown);
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-link: #1c39bb;
+}
 :root:has(#theme-toggle:not(:checked)),
 body:has(header input[role="switch"]:not(:checked)) {
   --color-primary: var(--palette-forest);
