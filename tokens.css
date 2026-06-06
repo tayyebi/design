@@ -78,4 +78,29 @@ body:has(header input[role="switch"]:checked),
 
   --space-unit: 8px;
   --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10);
+
+  --glass-bg: color-mix(in srgb, var(--color-surface), transparent 12%);
+  --glass-border: color-mix(in srgb, var(--color-border), transparent 20%);
+  --glass-glow: 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+
+  --code-bg: #1a1a2e;
+  --code-color: #a8e6cf;
+  --success: #27c93f;
+
+  --btn-gradient: linear-gradient(180deg,
+    color-mix(in srgb, var(--color-primary), white 18%) 0%,
+    var(--color-primary) 45%,
+    color-mix(in srgb, var(--color-primary), black 8%) 100%
+  );
+  --btn-glow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --btn-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+
+  --input-glass-bg: color-mix(in srgb, var(--color-surface), transparent 8%);
+  --input-glow: inset 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
 }

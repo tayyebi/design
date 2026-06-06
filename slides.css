@@ -29,6 +29,8 @@ html, body {
   border: none;
   opacity: 0;
   transition: opacity .25s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 #slide-frame.ready {
   opacity: 1;
@@ -227,6 +229,14 @@ html.dark-theme .color-grid li:nth-child(2) figure div strong:nth-child(2) { dis
 @media (min-width: 640px) {
   .slide-page h2 {
     font-size: 26px;
+  }
+}
+
+@media (max-width: 767px) {
+  [role="region"] {
+    bottom: auto;
+    top: 8px;
+    max-width: calc(100% - 16px);
   }
 }
 
