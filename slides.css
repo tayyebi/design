@@ -5,12 +5,14 @@
 
 /* ── Parent (index.html) layout ── */
 html, body {
-  height: 100%;
-  overflow: hidden;
   font-family: var(--font-body);
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.8;
+}
+body:not(.slide-page) {
+  overflow: hidden;
+  height: 100%;
 }
 
 :root {
