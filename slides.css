@@ -17,7 +17,7 @@ body:not(.slide-page) {
 
 :root {
   color-scheme: light;
-  accent-color: var(--palette-ember);
+  accent-color: var(--color-primary);
 }
 :root.dark-theme,
 :root:has(#theme-toggle:checked) {
