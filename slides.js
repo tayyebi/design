@@ -1,10 +1,5 @@
 (function() {
-  // ── Child slide context (runs inside iframe) ──
   if (window.self !== window.top) {
-    var params = new URLSearchParams(window.location.search);
-    if (params.get('theme') === 'dark') {
-      document.documentElement.className = 'dark-theme';
-    }
     window.addEventListener('message', function(e) {
       if (e.data && e.data.theme !== undefined) {
         document.documentElement.className = e.data.theme ? 'dark-theme' : '';
@@ -25,7 +20,6 @@
     return;
   }
 
-  // ── Parent context (index.html) ──
   var slideFiles = [
     'slides/01-title.htm',
     'slides/02-logos.htm',
@@ -53,23 +47,23 @@
   var nextBtn = document.getElementById('next');
   var toggle = document.getElementById('theme-toggle');
 
-  function themeQuery() {
-    return toggle && toggle.checked ? '?theme=dark' : '';
-  }
+  var baseUrl = window.location.href.replace(/index\.html$/, '');
 
-  function sendTheme() {
-    var iframe = frame.contentWindow;
-    if (iframe) {
-      iframe.postMessage({ theme: toggle && toggle.checked }, '*');
-    }
+  function wrapContent(bodyContent, index, isDark) {
+    var cls = index === 0 ? 'slide-page slide-page--center' : 'slide-page';
+    var themeClass = isDark ? ' dark-theme' : '';
+    return '<!DOCTYPE html><html lang="fa" dir="rtl" class="' + themeClass + '"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="' + baseUrl + '"><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="slides.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css"><script src="slides.js"><\/script></head><body class="' + cls + '">' + bodyContent + '</body></html>';
   }
 
   function loadSlide(index) {
     current = index;
     frame.classList.remove('ready');
-    frame.src = slideFiles[index] + themeQuery();
-    updateCounter();
-    updateDots();
+    var isDark = toggle && toggle.checked;
+    fetch(slideFiles[index]).then(function(r) { return r.text(); }).then(function(html) {
+      frame.srcdoc = wrapContent(html, index, isDark);
+      updateCounter();
+      updateDots();
+    });
   }
 
   function updateCounter() {
@@ -83,7 +77,6 @@
     }
   }
 
-  // Listen for swipe events from iframe
   window.addEventListener('message', function(e) {
     if (e.data && e.data.swipe) {
       if (e.data.swipe === 'prev' && current > 0) loadSlide(current - 1);
@@ -91,12 +84,10 @@
     }
   });
 
-  // Fade in iframe content on load
   frame.addEventListener('load', function() {
     frame.classList.add('ready');
   });
 
-  // Create dots
   for (var i = 0; i < total; i++) {
     var li = document.createElement('li');
     var btn = document.createElement('button');
@@ -129,13 +120,18 @@
     }
   });
 
-  // Theme toggle → send to iframe
   if (toggle) {
     toggle.addEventListener('change', function() {
       sendTheme();
     });
   }
 
-  // Initial load
+  function sendTheme() {
+    var iframe = frame.contentWindow;
+    if (iframe) {
+      iframe.postMessage({ theme: toggle && toggle.checked }, '*');
+    }
+  }
+
   loadSlide(0);
 })();

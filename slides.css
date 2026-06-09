@@ -14,11 +14,12 @@ html, body {
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   accent-color: var(--palette-ember);
 }
-:root:has(#theme-toggle:not(:checked)) {
-  color-scheme: light;
+:root.dark-theme,
+:root:has(#theme-toggle:checked) {
+  color-scheme: dark;
 }
 
 /* ── Iframe ── */
@@ -206,17 +207,11 @@ html, body {
 .color-grid li:nth-child(7) { order: 6; }
 .color-grid li:nth-child(1) figure div strong:nth-child(2),
 .color-grid li:nth-child(2) figure div strong:nth-child(2) { display: none; }
-body:has(#theme-toggle:checked) .color-grid li:nth-child(1),
 html.dark-theme .color-grid li:nth-child(1) { order: 1; }
-body:has(#theme-toggle:checked) .color-grid li:nth-child(2),
 html.dark-theme .color-grid li:nth-child(2) { order: 0; }
-body:has(#theme-toggle:checked) .color-grid li:nth-child(1) figure div strong:nth-child(1),
 html.dark-theme .color-grid li:nth-child(1) figure div strong:nth-child(1),
-body:has(#theme-toggle:checked) .color-grid li:nth-child(2) figure div strong:nth-child(1),
 html.dark-theme .color-grid li:nth-child(2) figure div strong:nth-child(1) { display: none; }
-body:has(#theme-toggle:checked) .color-grid li:nth-child(1) figure div strong:nth-child(2),
 html.dark-theme .color-grid li:nth-child(1) figure div strong:nth-child(2),
-body:has(#theme-toggle:checked) .color-grid li:nth-child(2) figure div strong:nth-child(2),
 html.dark-theme .color-grid li:nth-child(2) figure div strong:nth-child(2) { display: inline; }
 
 /* ── Responsive (mobile-first) ── */
