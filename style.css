@@ -342,7 +342,7 @@ section:nth-of-type(2) li:nth-child(4) figure div strong {
   color: var(--palette-cream);
 }
 
-/* ── Pin natural grid order ── */
+/* ── Pin natural grid order for all palette items ── */
 section:nth-of-type(2) li:nth-child(1) { order: 1; }
 section:nth-of-type(2) li:nth-child(2) { order: 2; }
 section:nth-of-type(2) li:nth-child(3) { order: 3; }
@@ -351,10 +351,29 @@ section:nth-of-type(2) li:nth-child(5) { order: 5; }
 section:nth-of-type(2) li:nth-child(6) { order: 6; }
 section:nth-of-type(2) li:nth-child(7) { order: 7; }
 
-/* Hide secondary labels on first two swatches */
+/* ── Dark mode: swap card order + labels for Primary/Secondary ── */
+body:has(header input[role="switch"]:checked) section:nth-of-type(2) li:nth-child(1),
+:root.dark-theme section:nth-of-type(2) li:nth-child(1) { order: 2; }
+body:has(header input[role="switch"]:checked) section:nth-of-type(2) li:nth-child(2),
+:root.dark-theme section:nth-of-type(2) li:nth-child(2) { order: 1; }
+
+/* Show first label, hide second by default (light mode) */
 section:nth-of-type(2) li:nth-child(1) figure div strong:nth-child(2),
 section:nth-of-type(2) li:nth-child(2) figure div strong:nth-child(2) {
   display: none;
+}
+/* Dark mode: swap labels */
+body:has(header input[role="switch"]:checked) section:nth-of-type(2) li:nth-child(1) figure div strong:nth-child(1),
+:root.dark-theme section:nth-of-type(2) li:nth-child(1) figure div strong:nth-child(1),
+body:has(header input[role="switch"]:checked) section:nth-of-type(2) li:nth-child(2) figure div strong:nth-child(1),
+:root.dark-theme section:nth-of-type(2) li:nth-child(2) figure div strong:nth-child(1) {
+  display: none;
+}
+body:has(header input[role="switch"]:checked) section:nth-of-type(2) li:nth-child(1) figure div strong:nth-child(2),
+:root.dark-theme section:nth-of-type(2) li:nth-child(1) figure div strong:nth-child(2),
+body:has(header input[role="switch"]:checked) section:nth-of-type(2) li:nth-child(2) figure div strong:nth-child(2),
+:root.dark-theme section:nth-of-type(2) li:nth-child(2) figure div strong:nth-child(2) {
+  display: inline;
 }
 
 section:nth-of-type(2) figcaption {

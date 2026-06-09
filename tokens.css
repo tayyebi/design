@@ -70,6 +70,8 @@ body:has(header input[role="switch"]:not(:checked)) {
 :root:has(#theme-toggle:checked),
 body:has(header input[role="switch"]:checked),
 :root.dark-theme {
+  --color-primary: var(--palette-ember);
+  --color-secondary: var(--palette-forest);
   --color-accent: var(--palette-amber);
   --color-navy: var(--palette-navy);
   --color-mint: #1a3a2e;
