@@ -1,0 +1,30 @@
+<h2>منوی کشویی</h2>
+<p style="margin-bottom:20px;font-size:14px;color:var(--color-text-muted)">منوی کشویی ساده با هاور و کلیک</p>
+<div class="dropdown-wrap" style="margin-bottom:24px">
+  <a href="#" style="display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:6px;text-decoration:none;font-size:13px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-border)">خدمات</a>
+  <div class="dropdown-menu">
+    <a href="#">توسعه نرم‌افزار</a>
+    <a href="#">مشاوره فناوری</a>
+    <a href="#">پشتیبانی و نگهداری</a>
+  </div>
+</div>
+<script>
+(function() {
+  var dw = document.querySelector('.dropdown-wrap');
+  if (dw) {
+    dw.addEventListener('click', function(e) {
+      e.preventDefault();
+      var menu = this.querySelector('.dropdown-menu');
+      var expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('dropdown-menu--open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown-wrap')) {
+        dw.setAttribute('aria-expanded', 'false');
+        dw.querySelector('.dropdown-menu').classList.remove('dropdown-menu--open');
+      }
+    });
+  }
+})();
+</script>
