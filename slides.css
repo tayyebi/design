@@ -132,7 +132,7 @@ body:not(.slide-page) {
   height: 24px;
   border: none;
   background: var(--color-border);
-  border-radius: 12px;
+  border-radius: 9999px;
   cursor: pointer;
   position: relative;
   transition: background .2s;

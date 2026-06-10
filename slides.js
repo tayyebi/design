@@ -124,8 +124,23 @@
     }
   });
 
+  function handleKeydown(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (current < total - 1) loadSlide(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (current > 0) loadSlide(current - 1);
+    }
+  }
+
+  document.addEventListener('keydown', handleKeydown);
+
   frame.addEventListener('load', function() {
     frame.classList.add('ready');
+    var fw = frame.contentWindow;
+    if (fw) fw.addEventListener('keydown', handleKeydown);
   });
 
   for (var i = 0; i < total; i++) {

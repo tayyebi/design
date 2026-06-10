@@ -159,7 +159,7 @@ body > header input[role="switch"] {
   height: 24px;
   border: none;
   background: var(--color-border);
-  border-radius: 12px;
+  border-radius: 9999px;
   cursor: pointer;
   position: relative;
   transition: background .2s;
@@ -821,7 +821,7 @@ section:nth-of-type(4) input[type="checkbox"][role="switch"] {
   height: 24px;
   border: none;
   background: var(--color-border);
-  border-radius: 12px;
+  border-radius: 9999px;
   cursor: pointer;
   position: relative;
   transition: background .2s;
@@ -927,7 +927,7 @@ section:nth-of-type(4) > ul:nth-of-type(2) li {
 section:nth-of-type(4) mark {
   display: inline-block;
   padding: 4px 14px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
   background: transparent;
@@ -1228,23 +1228,87 @@ section:nth-of-type(4) label:has(progress) {
 
 /* ─── Dialog ─── */
 section:nth-of-type(4) dialog {
-  position: static;
-  width: 100%;
-  max-width: 400px;
-  margin: 0;
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 0;
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: 0 8px 32px rgba(var(--color-burned-brown-rgb), 0.12);
+  box-shadow: 0 8px 32px rgba(var(--color-burned-brown-rgb), 0.15);
+  max-width: 480px;
+  width: min(90vw, 480px);
+  max-height: 80vh;
+  overflow-y: auto;
 }
 section:nth-of-type(4) dialog::backdrop {
-  background: rgba(var(--color-burned-brown-rgb), 0.3);
+  background: rgba(var(--color-burned-brown-rgb), 0.4);
+  backdrop-filter: blur(4px);
 }
-section:nth-of-type(4) dialog p {
+section:nth-of-type(4) dialog[open] {
+  animation: dialog-fade-in .25s ease-out;
+}
+@keyframes dialog-fade-in {
+  from { opacity: 0; transform: translateY(-16px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+section:nth-of-type(4) dialog.dialog--sm {
+  max-width: 360px;
+  width: min(85vw, 360px);
+}
+
+section:nth-of-type(4) .dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+section:nth-of-type(4) .dialog-header h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+}
+
+section:nth-of-type(4) .dialog-close {
+  all: unset;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text-muted);
+  transition: background .2s, color .2s;
+}
+section:nth-of-type(4) .dialog-close:hover {
+  background: color-mix(in srgb, var(--color-primary), transparent 90%);
+  color: var(--color-text);
+}
+
+section:nth-of-type(4) .dialog-body {
+  padding: 20px 24px;
+}
+section:nth-of-type(4) .dialog-body p {
   font-size: 14px;
   color: var(--color-text-muted);
+  margin: 0;
+}
+section:nth-of-type(4) .dialog-body p + p {
+  margin-top: 8px;
+}
+
+section:nth-of-type(4) .dialog-warning {
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+section:nth-of-type(4) .dialog-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 0 24px 20px;
 }
 
 
@@ -1891,6 +1955,9 @@ section:nth-of-type(4) dfn:focus-visible::after {
     transition: none;
   }
   section:nth-of-type(4) > p:has(output) + p {
+    animation: none;
+  }
+  section:nth-of-type(4) dialog[open] {
     animation: none;
   }
 }

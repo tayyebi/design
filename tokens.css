@@ -131,8 +131,8 @@ body:has(header input[role="switch"]:checked),
 
   /* ── Border radius ── */
   --radius-sm: 6px;
-  --radius: 12px;
-  --radius-lg: 16px;
+  --radius: 10px;
+  --radius-lg: 10px;
   --radius-full: 9999px;
 
   /* ── Shadows ── */
