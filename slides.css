@@ -189,6 +189,16 @@ body:not(.slide-page) {
   margin-bottom: 16px;
   color: var(--color-text);
 }
+.slide-page .slide-desc {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+.slide-page .slide-hint {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--color-text-faint);
+}
 .slide-page h3 {
   font-family: var(--font-display);
   font-size: 18px;

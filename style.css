@@ -55,7 +55,7 @@ samp {
 }
 ins {
   text-decoration: none;
-  color: var(--success);
+  color: var(--color-success);
 }
 a {
   color: var(--color-link);
@@ -1003,7 +1003,7 @@ section:nth-of-type(4) aside:nth-of-type(3) {
   border-right: none;
   border-left-color: var(--color-accent);
 }
-section:nth-of-type(4) aside:nth-of-type(3) h4 { color: #b38600; }
+section:nth-of-type(4) aside:nth-of-type(3) h4 { color: color-mix(in srgb, var(--color-accent), var(--color-burned-brown) 30%); }
 /* Info */
 section:nth-of-type(4) aside:nth-of-type(4) {
   background: color-mix(in srgb, var(--color-navy), transparent 90%);
@@ -1723,8 +1723,8 @@ section:nth-of-type(4) > pre:nth-of-type(2)::before {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ff5f56;
-  box-shadow: 18px 0 var(--palette-amber), 36px 0 var(--success);
+  background: var(--terminal-red);
+  box-shadow: 18px 0 var(--terminal-amber), 36px 0 var(--color-success);
 }
 
 /* ── Pricing Cards ── */
@@ -2995,7 +2995,7 @@ section:has(> ul > li > article:has(blockquote)) > ul {
   background: color-mix(in srgb, var(--color-accent), transparent 85%);
   border-inline-start: 5px solid var(--color-accent);
 }
-.alert-warn h4 { color: #b38600; }
+.alert-warn h4 { color: color-mix(in srgb, var(--color-accent), var(--color-burned-brown) 30%); }
 .alert-info {
   background: color-mix(in srgb, var(--color-navy), transparent 90%);
   border-inline-start: 5px solid var(--color-navy);
@@ -3211,4 +3211,232 @@ section:has(> ul > li > article:has(blockquote)) > ul {
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
   .testimonial-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
   .type-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+
+/* ═══════════════════════════════════════════════════
+   Slide Utility Classes
+   Used by slide HTML files for the design.tyyi.net
+   presentation. These keep slide markup clean.
+   ═══════════════════════════════════════════════════ */
+
+/* ── Description paragraph ── */
+.slide-desc {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* ── Small description / metadata ── */
+.slide-desc-sm {
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* ── Hint text (first slide nav hint, etc.) ── */
+.slide-hint {
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--color-text-faint);
+}
+
+/* ── Title description (first slide only) ── */
+.slide-title-desc {
+  max-width: 500px;
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+/* ── Spacing utilities (for slide use) ── */
+.slide-mb-12 { margin-bottom: 12px; }
+.slide-mb-16 { margin-bottom: 16px; }
+.slide-mb-20 { margin-bottom: 20px; }
+.slide-mb-24 { margin-bottom: 24px; }
+.slide-mt-12 { margin-top: 12px; }
+.slide-mt-24 { margin-top: 24px; }
+
+/* ── Flex row container (slide usage) ── */
+.slide-flex-row {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ── Inline code in slide descriptions ── */
+.slide-desc code,
+.slide-desc-sm code {
+  font-size: .85em;
+  padding: 1px 6px;
+}
+
+/* ── Terminal output (slide 25) ── */
+.terminal-output {
+  position: relative;
+  padding-top: 40px;
+}
+.terminal-output code {
+  all: unset;
+  display: block;
+  direction: ltr;
+  text-align: left;
+}
+.terminal-check {
+  color: var(--color-success);
+}
+
+/* ── Demo grid for slide 28 testimonials ── */
+.demo-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 480px) {
+  .demo-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Usage guide slide (slide 35) ── */
+.usage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 800px;
+}
+@media (min-width: 640px) {
+  .usage-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.usage-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.usage-card h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+}
+.usage-card p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+.usage-card pre {
+  margin-top: 12px;
+  font-size: 11px;
+}
+.usage-footnote {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--color-text-faint);
+}
+
+/* ── Contact icon (slide 32) ── */
+.contact-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-primary), transparent 92%);
+  color: var(--color-primary);
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+/* ── Sidebar max-width (slide 31) ── */
+.sidebar-demo {
+  max-width: 280px;
+}
+
+/* ── Blog card max-width (slide 29) ── */
+.blog-card-demo {
+  max-width: 400px;
+}
+
+/* ── FAQ max-width (slide 33) ── */
+.faq-demo {
+  max-width: 500px;
+}
+
+/* ── Top bar interior parts (slide 12) ── */
+.top-bar__brand {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--color-text);
+  margin-inline-start: auto;
+}
+.top-bar__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.top-bar__nav-link {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--color-text);
+  transition: background .15s, color .15s;
+}
+.top-bar__nav-link:hover {
+  background: color-mix(in srgb, var(--color-primary), transparent 92%);
+  color: var(--color-primary);
+}
+.top-bar__nav-link--active {
+  background: var(--color-primary);
+  color: var(--palette-cream);
+}
+.top-bar__nav-link--active:hover {
+  background: color-mix(in srgb, var(--color-primary), var(--color-burned-brown) 10%);
+  color: var(--palette-cream);
+}
+
+/* ── Dropdown trigger (slide 13) ── */
+.dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+/* ── Top bar container (slide 12 bottom) ── */
+.top-bar__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+/* ── Top bar outer with radius (slide 12 top) ── */
+.top-bar--rounded-top {
+  margin-bottom: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+}
+.top-bar--rounded-bottom {
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* ── Slide heading display font helper ── */
+.slide-heading-display {
+  font-family: var(--font-display);
+  font-weight: 400;
 }
